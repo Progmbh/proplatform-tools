@@ -16,7 +16,7 @@
     </p>
     <form id="form-create-btn">
         <p>
-            <label for="btn-label">Button Label:</label>
+            <label for="btn-label">Button label:</label>
             <input type="text" id="btn-label"/>
         </p>
         <p>
@@ -26,6 +26,16 @@
         <p>
             <label for="btn-password">Password:</label>
             <input type="text" id="btn-password"/>
+        </p>
+
+        <p>
+            <label for="btn-remember-me">Use "Remember me"</label>
+            <input type="checkbox" id="btn-remember-me"/>
+        </p>
+
+        <p>
+            <label for="btn-auto-login">Auto login</label>
+            <input type="checkbox" id="btn-auto-login" checked="true" />
         </p>
 
         <button type="submit">Create Admin LogIn Button</button>
@@ -51,23 +61,36 @@
         var label = document.getElementById('btn-label').value;
         var username = document.getElementById('btn-username').value;
         var password = document.getElementById('btn-password').value;
+        var rememberMeChecked = document.getElementById('btn-remember-me').checked;
+        var autoLoginChecked = document.getElementById('btn-auto-login').checked;
+
         var btn = document.getElementById('admin-login-btn');
         var fieldset = document.getElementById('fieldset-created-btn');
-        var subtitle = '';
-        if (label != '') {
-            subtitle = ' - ' + label;
+
+        if (username == '' || password == '') {
+            alert('Specify Username and Password');
+            return false;
         }
 
-        var code =
-`javascript:void((function(){
-document.getElementById('UserEmail').value = '${username}';
-document.getElementById('UserPassword').value = '${password}';
-document.getElementById('UsersLogin').submit();
-})())`;
+        var code = 'javascript:void((function(){ ';
+        code += 'document.getElementById(\'UserEmail\').value = \'' + username + '\'; ';
+        code += 'document.getElementById(\'UserPassword\').value = \'' + password + '\'; ';
+        if (rememberMeChecked) {
+            code += 'document.getElementById(\'UserRememberMe\').checked = true; ';
+        }
+        if (autoLoginChecked) {
+            code += 'document.getElementById(\'UsersLogin\').submit(); ';
+        }
+        code += ' })())';
+
+        var title = 'ProLogin';
+        if (label != '') {
+            title += ' - ' + label;
+        }
 
         btn.href = code;
-        btn.title += subtitle;
-        btn.textContent += subtitle;
+        btn.title = title;
+        btn.textContent = title;
         fieldset.style.display = 'block';
 
         return false;
