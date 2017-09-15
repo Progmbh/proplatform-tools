@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>On-demand Debugging button</title>
+    <link rel="stylesheet" href="../inc/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="../inc/btn.css" type="text/css"/>
+</head>
+<body>
+
+<h1>On-demand Debugging button</h1>
+
+<p>Drag and drop the link below onto your browser's toolbar...</p>
+
+<a href='javascript:void((function(){
+    var domain = window.location.hostname;
+    var cookieValue = prompt("== On-demand debugging ==\n\nTo enable on-demand debugging for \""+domain+"\" you need to run QWE command \n    qwe project/developer/debug_cookie [env [features]] (\"env\" is optional; \"features\" is optional) \n    on your client and paste the generated debug cookie value below.\n\nTo disable on-demand debugging just paste in \"disable\".\n\n");
+    if (cookieValue != null) {
+        cookieValue = cookieValue.replace(/\s+/g, "");
+        document.cookie = "proplatform_debug="+cookieValue;
+        if (cookieValue == "disable") {
+            alert("Debugging was disabled for \""+domain+"\".");
+        } else {
+            alert("Cookie was set for \""+domain+"\" and it will expire in 1 hour.");
+        }
+    }
+})())' title="ProDebug" class="btn">ProDebug</a>
+
+</body>
+</html>

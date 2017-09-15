@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Admin LogIn Button</title>
+    <link rel="stylesheet" href="../inc/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="../inc/btn.css" type="text/css"/>
+</head>
+<body>
+<h1>Admin LogIn Button</h1>
+
+<fieldset>
+    <legend>Configure Admin LogIn Button</legend>
+    <p>
+        First you need to configure your personalized Admin Login Button:
+    </p>
+    <form id="form-create-btn">
+        <p>
+            <label for="btn-label">Button Label:</label>
+            <input type="text" id="btn-label"/>
+        </p>
+        <p>
+            <label for="btn-username">Username:</label>
+            <input type="text" id="btn-username"/>
+        </p>
+        <p>
+            <label for="btn-password">Password:</label>
+            <input type="text" id="btn-password"/>
+        </p>
+
+        <button type="submit">Create Admin LogIn Button</button>
+    </form>
+</fieldset>
+
+<br><br>
+
+<fieldset style="display: none;" id="fieldset-created-btn">
+    <legend>Your Admin LogIn Button</legend>
+    <p>Drag and drop the link below onto your browser's toolbar...</p>
+    <p>
+        <a href='' title="ProLogin" id="admin-login-btn" class="btn">ProLogin</a>
+    </p>
+</fieldset>
+
+<script type="application/javascript">
+
+    function createBtn(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        var label = document.getElementById('btn-label').value;
+        var username = document.getElementById('btn-username').value;
+        var password = document.getElementById('btn-password').value;
+        var btn = document.getElementById('admin-login-btn');
+        var fieldset = document.getElementById('fieldset-created-btn');
+        var subtitle = '';
+        if (label != '') {
+            subtitle = ' - ' + label;
+        }
+
+        var code =
+`javascript:void((function(){
+document.getElementById('UserEmail').value = '${username}';
+document.getElementById('UserPassword').value = '${password}';
+document.getElementById('UsersLogin').submit();
+})())`;
+
+        btn.href = code;
+        btn.title += subtitle;
+        btn.textContent += subtitle;
+        fieldset.style.display = 'block';
+
+        return false;
+    }
+
+    document.getElementById('form-create-btn').addEventListener('submit', createBtn);
+
+</script>
+</body>
+</html>
