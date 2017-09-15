@@ -79,7 +79,11 @@
             code += 'document.getElementById(\'UserRememberMe\').checked = true; ';
         }
         if (autoLoginChecked) {
+            code += 'if (document.getElementById(\'captcha\') === null) { ';
             code += 'document.getElementById(\'UsersLogin\').submit(); ';
+            code += '} else { ';
+            code += 'alert(\'You need to fill in CAPTCHA.\'); '
+            code += '} ';
         }
         code += ' })())';
 
